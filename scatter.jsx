@@ -14,7 +14,8 @@ var basicDotStyle = {
   width: `${DOT_SIZE}px`,
   height: `${DOT_SIZE}px`,
   borderRadius: '50%',
-  position: 'absolute'
+  position: 'absolute',
+  cursor: 'pointer'
 }
 var tooltipStyle = {
   position: 'absolute',
@@ -136,12 +137,15 @@ module.exports = createReactClass({
         colorDictionary[flower.species] = colorPalette.pop()
       }
       var color = colorDictionary[flower.species]
+      var dotBorder = _this.state.activeFlowerIndex === i ?
+        { border: '1px solid #fff' } : {}
       var dotStyle = Object.assign(
         {
           top: topOffset,
           left: leftOffset,
           backgroundColor: color
         },
+        dotBorder,
         basicDotStyle
       )
 
@@ -174,6 +178,7 @@ module.exports = createReactClass({
       <div
         style={containerStyle}
       >
+        {this.drawVisualization()}
         {
           this.state.activeFlowerIndex >= 0 &&
           <Tooltip
@@ -181,7 +186,6 @@ module.exports = createReactClass({
             flower={this.state.flowers[this.state.activeFlowerIndex]}
           />
         }
-        {this.drawVisualization()}
       </div>
     )
   }
