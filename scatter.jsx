@@ -26,42 +26,42 @@ var tooltipStyle = {
 var colorPalette = [
   '#1f77b4',
   '#2ca02c',
-  '#ff7f0e',
+  '#ff7f0e'
 ]
 var colorDictionary = {}
 
 var Tooltip = createReactClass({
-  render() {
+  render () {
     return (
       <div
         style={tooltipStyle}
       >
         <table>
           <tbody>
-          <tr>
-            <td>i:</td>
-            <td>{this.props.index}</td>
-          </tr>
-          <tr>
-            <td>species:</td>
-            <td>{this.props.flower.species}</td>
-          </tr>
-          <tr>
-            <td>petal width:</td>
-            <td>{this.props.flower.petalWidth}</td>
-          </tr>
-          <tr>
-            <td>petal length:</td>
-            <td>{this.props.flower.petalLength}</td>
-          </tr>
-          <tr>
-            <td>sepal width:</td>
-            <td>{this.props.flower.sepalWidth}</td>
-          </tr>
-          <tr>
-            <td>sepal length:</td>
-            <td>{this.props.flower.sepalLength}</td>
-          </tr>
+            <tr>
+              <td>i:</td>
+              <td>{this.props.index}</td>
+            </tr>
+            <tr>
+              <td>species:</td>
+              <td>{this.props.flower.species}</td>
+            </tr>
+            <tr>
+              <td>petal width:</td>
+              <td>{this.props.flower.petalWidth}</td>
+            </tr>
+            <tr>
+              <td>petal length:</td>
+              <td>{this.props.flower.petalLength}</td>
+            </tr>
+            <tr>
+              <td>sepal width:</td>
+              <td>{this.props.flower.sepalWidth}</td>
+            </tr>
+            <tr>
+              <td>sepal length:</td>
+              <td>{this.props.flower.sepalLength}</td>
+            </tr>
           </tbody>
         </table>
       </div>
@@ -71,7 +71,7 @@ var Tooltip = createReactClass({
 
 module.exports = createReactClass({
 
-  getInitialState() {
+  getInitialState () {
     return {
       flowers: [],
       minPetalWidth: 0,
@@ -82,16 +82,16 @@ module.exports = createReactClass({
     }
   },
 
-  componentDidMount() {
+  componentDidMount () {
     var _this = this
-    jsonist.get(this.props.dataset, {}, function(err, data) {
+    jsonist.get(this.props.dataset, {}, function (err, data) {
       if (!err && data.length) {
         var minPetalWidth = data[0].petalWidth
         var maxPetalWidth = data[0].petalWidth
         var minPetalLength = data[0].petalLength
         var maxPetalLength = data[0].petalLength
 
-        data.forEach(function(flower) {
+        data.forEach(function (flower) {
           if (flower.petalWidth < minPetalWidth) {
             minPetalWidth = flower.petalWidth
           } else if (flower.petalWidth > maxPetalWidth) {
@@ -115,10 +115,9 @@ module.exports = createReactClass({
     })
   },
 
-  drawVisualization() {
+  drawVisualization () {
     var _this = this
-    return this.state.flowers.map(function(flower, i) {
-
+    return this.state.flowers.map(function (flower, i) {
       var topOffset = _this.props.height - DOT_SIZE - linmap(
         _this.state.minPetalLength,
         _this.state.maxPetalLength,
@@ -137,8 +136,8 @@ module.exports = createReactClass({
         colorDictionary[flower.species] = colorPalette.pop()
       }
       var color = colorDictionary[flower.species]
-      var dotBorder = _this.state.activeFlowerIndex === i ?
-        { border: '1px solid #fff' } : {}
+      var dotBorder = _this.state.activeFlowerIndex === i
+        ? { border: '1px solid #fff' } : {}
       var dotStyle = Object.assign(
         {
           top: topOffset,
@@ -153,14 +152,13 @@ module.exports = createReactClass({
         <div
           key={i}
           style={dotStyle}
-          onMouseOver={function() {
+          onMouseOver={function () {
             _this.setState({ activeFlowerIndex: i })
           }}
-          onMouseOut={function() {
+          onMouseOut={function () {
             _this.setState({ activeFlowerIndex: -1 })
           }}
-        >
-        </div>
+        />
       )
     })
   },
