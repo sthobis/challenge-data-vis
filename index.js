@@ -1,5 +1,6 @@
 var React = require('React')
 var ReactDOM = require('react-dom')
+var createReactClass = require('create-react-class')
 
 var Scatter = require('./scatter.jsx')
 
@@ -15,10 +16,38 @@ container.style.height = '100vh'
 
 document.body.appendChild(container)
 
-var element = React.createElement(Scatter, {
-  width: window.innerWidth * 0.8,
-  height: window.innerHeight * 0.8,
-  dataset: 'https://azure-respect.glitch.me/iris.json'
+var ScatterContainer = createReactClass({
+
+  displayName: 'ScatterContainer',
+
+  getInitialState () {
+    return {
+      width: window.innerWidth * 0.8,
+      height: window.innerHeight * 0.8,
+      dataset: 'https://azure-respect.glitch.me/iris.json'
+    }
+  },
+
+  componentDidMount () {
+    var _this = this
+
+    window.onresize = function () {
+      _this.setState({
+        width: window.innerWidth * 0.8,
+        height: window.innerHeight * 0.8
+      })
+    }
+  },
+
+  render () {
+    return (
+      <Scatter
+        width={this.state.width}
+        height={this.state.height}
+        dataset={this.state.dataset}
+      />
+    )
+  }
 })
 
-ReactDOM.render(element, container)
+ReactDOM.render(<ScatterContainer />, container)

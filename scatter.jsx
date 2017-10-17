@@ -71,6 +71,8 @@ var Tooltip = createReactClass({
 
 module.exports = createReactClass({
 
+  displayName: 'Scatter',
+
   getInitialState () {
     return {
       flowers: [],
